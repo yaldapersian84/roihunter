@@ -10,10 +10,16 @@ import lombok.ToString;
 @ToString
 public class UserPhotoDto {
 
-	private String id;
+    private String id;
 
-	private String name;
+    private String name;
 
-	@JsonProperty("created_time")
-	private String createdTime;
+    private String link;
+
+    private AlbumDto album;
+
+    @JsonProperty("created_time")
+    private String createdTime;
+
+    private LikesDto likes;
 }

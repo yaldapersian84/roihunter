@@ -5,6 +5,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Data
@@ -27,6 +30,10 @@ public class UserInfo {
 
 	@Column(name = "fb_id", unique = true)
 	private String fbId;
+
+
+	@OneToMany(mappedBy = "userInfo")
+	private Set<UserPhoto> photos = new HashSet<>();
 
 
 	public UserInfo(String name) {

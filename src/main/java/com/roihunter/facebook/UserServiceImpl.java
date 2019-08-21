@@ -7,36 +7,51 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserServiceImpl implements UserService {
 
-	private FacebookClient facebookClient;
+    private FacebookClient facebookClient;
 
-	private final UserDao userDao;
+    private final UserInfoDao userInfoDao;
+
+    private final UserPhotoDao userPhotoDao;
+
+    private final FacebookBeanMapper mapper;
 
 
-	public UserServiceImpl(FacebookClient facebookClient, final UserDao userDao) {
-		this.facebookClient = facebookClient;
-		this.userDao = userDao;
-	}
+    public UserServiceImpl(FacebookClient facebookClient, final UserInfoDao userInfoDao,
+                           final UserPhotoDao userPhotoDao, final FacebookBeanMapper mapper) {
+        this.facebookClient = facebookClient;
+        this.userPhotoDao = userPhotoDao;
+        this.userInfoDao = userInfoDao;
+        this.mapper = mapper;
+    }
 
-	@Override
-	public UserDataResponse saveUserDate(String token, String fbId) {
+    @Override
+    public UserDataResponse saveUserData(String token, String fbId) {
 
-		UserDataResponse response = facebookClient.getData(fbId, token);
-		UserInfo userInfo = new UserInfo();
-		userInfo.setFbId(response.getId());
-		userInfo.setName(response.getName());
-		userInfo.setGender(response.getGender());
 
-		userInfo.setProfilePic(response.getPicture().getData().getUrl());
+        UserDataResponse response = facebookClient.getData(fbId, token);
 
-		userDao.save(userInfo);
+        userInfoDao.save(mapper.toUserInfo(response));
 
-		return response;
+        return response;
+//		return null;
 
-	}
+    }
 
-	@Override
-	public UserPhotosResponse getUserPhotos(String token, String fbId) {
-		return facebookClient.getPhotos(fbId, token);
-	}
+    @Override
+    public UserPhotosResponse getUserPhotos(String token, String fbId, int size) {
+        UserDataResponse response = facebookClient.getData(fbId, token);
+
+        UserInfo userInfo =userInfoDao.save(mapper.toUserInfo(response));
+
+        UserPhotosResponse response2 = facebookClient.getPhotos(fbId, token, size);
+
+        response2.getData().stream().forEach(photo -> {
+            userPhotoDao.save(mapper.toUserPhoto(photo, userInfo.getId()));
+        });
+
+//        userDao.save(mapper.toUserInfo(response));
+
+        return response2;
+    }
 
 }

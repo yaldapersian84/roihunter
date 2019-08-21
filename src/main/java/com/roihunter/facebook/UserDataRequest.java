@@ -14,4 +14,5 @@ public class UserDataRequest {
 
 	String accessToken;
 	String fbId;
+	int size;
 }
