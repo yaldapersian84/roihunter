@@ -28,6 +28,8 @@ public interface FacebookBeanMapper {
     })
     UserPhoto toUserPhoto(UserPhotoDto response, Long userInfoId);
 
+    Image toImage(ImageDto imageDto);
+
 
 
 

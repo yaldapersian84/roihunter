@@ -21,7 +21,7 @@ public interface FacebookClient {
 	UserPhotosResponse getPhotos2(@PathVariable("fbId") String fbId, @RequestParam("access_token") String token);
 
 //	@RequestMapping(method = RequestMethod.GET, path = "/{fbId}/photos?access_token={accessToken}&type=uploaded")
-	@RequestMapping(method = RequestMethod.GET, path = "/{fbId}/photos?fields=likes.summary(true),link,album,id,name&type=tagged")
+	@RequestMapping(method = RequestMethod.GET, path = "/{fbId}/photos?fields=likes.summary(true),link,album,id,name,images&type=tagged")
 
 	UserPhotosResponse getPhotos(@PathVariable("fbId") String fbId, @RequestParam("access_token") String token, @RequestParam("limit") int size);
 }

@@ -5,12 +5,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "userPhotoss")
+@Table(name = "userPhotos")
 public class UserPhoto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,6 +41,10 @@ public class UserPhoto {
     @JoinColumn(name="fk_info_id", nullable=false
             , foreignKey = @ForeignKey(name = "user_photo_fk_info_id"))
     private UserInfo userInfo;
+
+    @ElementCollection(fetch = FetchType.LAZY)
+    @CollectionTable(name = "user_photo_images", joinColumns = @JoinColumn(name = "user_photo_id"))
+     private Set<Image> images = new HashSet<>();
 
 
 }

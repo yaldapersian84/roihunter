@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.List;
+
 @Setter
 @Getter
 @ToString
@@ -22,4 +24,6 @@ public class UserPhotoDto {
     private String createdTime;
 
     private LikesDto likes;
+
+    private List<ImageDto> images;
 }
