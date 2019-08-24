@@ -8,5 +8,4 @@ public interface UserInfoDao extends JpaRepository<UserInfo, Long> {
 
 	Optional<UserInfo> findByFbId(String fbId);
 
-
 }

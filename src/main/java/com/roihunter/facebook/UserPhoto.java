@@ -1,19 +1,21 @@
 package com.roihunter.facebook;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Data
+@Setter
+@Getter
+@ToString(callSuper = true)
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "userPhotos")
-public class UserPhoto {
+public class UserPhoto implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -42,9 +44,13 @@ public class UserPhoto {
             , foreignKey = @ForeignKey(name = "user_photo_fk_info_id"))
     private UserInfo userInfo;
 
-    @ElementCollection(fetch = FetchType.LAZY)
-    @CollectionTable(name = "user_photo_images", joinColumns = @JoinColumn(name = "user_photo_id"))
-     private Set<Image> images = new HashSet<>();
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(
+            name = "user_photo_images"
+            , joinColumns = @JoinColumn(name = "user_photo_id")
+    )
+    @Column(name = "user_image", nullable = false)
+    private Set<String> images = new HashSet<>();
 
 
 }

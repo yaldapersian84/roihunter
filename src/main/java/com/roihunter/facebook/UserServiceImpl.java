@@ -1,7 +1,10 @@
 package com.roihunter.facebook;
 
+import com.roihunter.facebook.exception.PspGeneralException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Slf4j
 @Service
@@ -11,47 +14,49 @@ public class UserServiceImpl implements UserService {
 
     private final UserInfoDao userInfoDao;
 
-    private final UserPhotoDao userPhotoDao;
-
     private final FacebookBeanMapper mapper;
 
 
-    public UserServiceImpl(FacebookClient facebookClient, final UserInfoDao userInfoDao,
-                           final UserPhotoDao userPhotoDao, final FacebookBeanMapper mapper) {
+    public UserServiceImpl(FacebookClient facebookClient, final UserInfoDao userInfoDao, final FacebookBeanMapper mapper) {
         this.facebookClient = facebookClient;
-        this.userPhotoDao = userPhotoDao;
         this.userInfoDao = userInfoDao;
         this.mapper = mapper;
     }
 
     @Override
-    public UserDataResponse saveUserData(String token, String fbId) {
+    public void saveUserData(String token, String fbId, int size) {
+        UserDataResponse userDataResponse = facebookClient.getData(fbId, token);
 
+        UserInfo userInfo = userInfoDao.save(mapper.toUserInfo(userDataResponse));
 
-        UserDataResponse response = facebookClient.getData(fbId, token);
+        UserPhotosResponse userPhotosResponse = facebookClient.getPhotos(fbId, token, size);
 
-        userInfoDao.save(mapper.toUserInfo(response));
-
-        return response;
-//		return null;
-
+        userPhotosResponse.getData().stream().forEach(photo -> {
+            userInfo.getPhotos().add(mapper.toUserPhoto(photo, userInfo.getId()));
+        });
+        userInfoDao.save(userInfo);
     }
 
     @Override
-    public UserPhotosResponse getUserPhotos(String token, String fbId, int size) {
-        UserDataResponse response = facebookClient.getData(fbId, token);
+    public void deleteUser(String fbId) throws PspGeneralException {
+        userInfoDao.delete(this.findByFbId(fbId));
+    }
 
-        UserInfo userInfo =userInfoDao.save(mapper.toUserInfo(response));
+    @Override
+    public UserInfo findByFbId(String fbId) throws PspGeneralException {
+        return userInfoDao.findByFbId(fbId).orElseThrow(() ->
+                new PspGeneralException(ResultStatus.BAD_REQUEST, "efss"));
+    }
 
-        UserPhotosResponse response2 = facebookClient.getPhotos(fbId, token, size);
+    @Override
+    public UserInfoResponse getUserInfo(String fbId) throws PspGeneralException {
 
-        response2.getData().stream().forEach(photo -> {
-            userPhotoDao.save(mapper.toUserPhoto(photo, userInfo.getId()));
-        });
+        return mapper.toUserInfoResponse(this.findByFbId(fbId));
+    }
 
-//        userDao.save(mapper.toUserInfo(response));
-
-        return response2;
+    @Override
+    public List<UserPhotoResponseDto> getUserPhoto(String fbId) throws PspGeneralException {
+        return mapper.toListUserPhotos(this.findByFbId(fbId).getPhotos());
     }
 
 }

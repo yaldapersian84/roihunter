@@ -4,6 +4,9 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 
+import java.util.List;
+import java.util.Set;
+
 @Mapper(componentModel = "spring")
 public interface FacebookBeanMapper {
 
@@ -24,13 +27,16 @@ public interface FacebookBeanMapper {
             @Mapping(target = "link", source = "response.link"),
             @Mapping(target = "likes", source = "response.likes.summary.totalCount"),
             @Mapping(target = "userInfo.id", source = "userInfoId"),
+            @Mapping(target = "images", source = "response.images"),
 
     })
     UserPhoto toUserPhoto(UserPhotoDto response, Long userInfoId);
 
-    Image toImage(ImageDto imageDto);
+    default String imageDtoToString(ImageDto imageDto) {
+        return imageDto.getSource();
+    }
+    UserInfoResponse toUserInfoResponse(UserInfo info);
 
-
-
+    List<UserPhotoResponseDto> toListUserPhotos(Set<UserPhoto> photos);
 
 }
