@@ -1,9 +1,9 @@
 package com.roihunter.facebook.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.roihunter.facebook.ResultStatus;
+import com.roihunter.facebook.model.response.ResultStatus;
 import com.roihunter.facebook.exception.PspClientException;
-import com.roihunter.facebook.facebookErrorResponse;
+import com.roihunter.facebook.model.response.facebookErrorResponse;
 import feign.Response;
 import feign.Util;
 import feign.codec.ErrorDecoder;

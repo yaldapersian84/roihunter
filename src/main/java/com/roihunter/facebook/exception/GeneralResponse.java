@@ -1,8 +1,8 @@
 package com.roihunter.facebook.exception;
 
 
-import com.roihunter.facebook.Result;
-import com.roihunter.facebook.ResultStatus;
+import com.roihunter.facebook.model.response.Result;
+import com.roihunter.facebook.model.response.ResultStatus;
 
 public class GeneralResponse extends ResponseService {
 	private static final long serialVersionUID = -9046751394123883723L;

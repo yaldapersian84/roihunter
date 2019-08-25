@@ -1,7 +1,7 @@
 package com.roihunter.facebook.exception;
 
 
-import com.roihunter.facebook.ResultStatus;
+import com.roihunter.facebook.model.response.ResultStatus;
 
 
 public abstract class BusinessException extends Exception {

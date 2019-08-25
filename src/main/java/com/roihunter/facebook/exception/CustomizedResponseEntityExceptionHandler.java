@@ -1,7 +1,7 @@
 package com.roihunter.facebook.exception;
 
-import com.roihunter.facebook.Result;
-import com.roihunter.facebook.ResultStatus;
+import com.roihunter.facebook.model.response.Result;
+import com.roihunter.facebook.model.response.ResultStatus;
 import feign.RetryableException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,10 +25,7 @@ import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import java.security.InvalidParameterException;
 
-/**
- * Created by sima on 4/29/18.
- * Mail To sima.ahmadvand@gmail.com
- */
+
 @Slf4j
 @ControllerAdvice
 public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
@@ -43,7 +40,6 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
 	@Override
 	protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers,
 																  HttpStatus status, WebRequest request) {
-//		logger.error("validation exception {}", ex.getBindingResult().toString());
 		return new ResponseEntity<>(new GeneralResponse(createResult(getCustomMessage(ex))), HttpStatus.UNPROCESSABLE_ENTITY);
 	}
 

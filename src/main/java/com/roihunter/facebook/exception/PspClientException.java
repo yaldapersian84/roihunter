@@ -1,6 +1,6 @@
 package com.roihunter.facebook.exception;
 
-import com.roihunter.facebook.ResultStatus;
+import com.roihunter.facebook.model.response.ResultStatus;
 import lombok.Getter;
 import lombok.Setter;
 

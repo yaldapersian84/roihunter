@@ -2,8 +2,8 @@ package com.roihunter.facebook.exception;
 
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.roihunter.facebook.Result;
-import com.roihunter.facebook.ResultStatus;
+import com.roihunter.facebook.model.response.Result;
+import com.roihunter.facebook.model.response.ResultStatus;
 
 public class ResponseService extends BaseService {
 	private static final long serialVersionUID = 2466742670208814125L;
