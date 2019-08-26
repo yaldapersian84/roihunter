@@ -1,4 +1,4 @@
-package com.roihunter.facebook.impl;
+package com.roihunter.facebook.exception;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.roihunter.facebook.exception.ClientException;
