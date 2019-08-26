@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import javax.validation.constraints.NotNull;
+
 
 @Setter
 @Getter
@@ -14,5 +16,8 @@ public class UserDataRequest {
 
 	String accessToken;
 	String fbId;
-	int size;
+
+	// size of user pictures
+	@NotNull
+	Integer size;
 }
