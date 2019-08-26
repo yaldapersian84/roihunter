@@ -6,7 +6,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class PspClientException extends PspGeneralException {
+public class ClientException extends GeneralException {
 
 	private static final long serialVersionUID = 906300249598577203L;
 
@@ -14,27 +14,27 @@ public class PspClientException extends PspGeneralException {
 
 	private String pspErrorMessage;
 
-	public PspClientException(String errorMessage) {
-		this(ResultStatus.PSPPROXY_PSP_UNKNOWN_ERROR, null, errorMessage, null);
+	public ClientException(String errorMessage) {
+		this(ResultStatus.FB_UNKNOWN_ERROR, null, errorMessage, null);
 	}
 
-	public PspClientException(ResultStatus resultStatus) {
+	public ClientException(ResultStatus resultStatus) {
 		this(resultStatus, null, null, null);
 	}
 
-	public PspClientException(ResultStatus resultStatus, String pspErrorCode) {
+	public ClientException(ResultStatus resultStatus, String pspErrorCode) {
 		this(resultStatus, pspErrorCode, null, null);
 	}
 
-	public PspClientException(ResultStatus resultStatus, Throwable cause) {
+	public ClientException(ResultStatus resultStatus, Throwable cause) {
 		this(resultStatus, null, cause.getMessage(), cause);
 	}
 
-	public PspClientException(ResultStatus resultStatus, String pspErrorCode, String pspErrorMessage) {
+	public ClientException(ResultStatus resultStatus, String pspErrorCode, String pspErrorMessage) {
 		this(resultStatus, pspErrorCode, pspErrorMessage, null);
 	}
 
-	public PspClientException(ResultStatus resultStatus, String pspErrorCode, String pspErrorMessage, Throwable cause) {
+	public ClientException(ResultStatus resultStatus, String pspErrorCode, String pspErrorMessage, Throwable cause) {
 		super(resultStatus.toString(), cause);
 		this.pspErrorCode = pspErrorCode;
 		this.pspErrorMessage = pspErrorMessage;
@@ -43,6 +43,6 @@ public class PspClientException extends PspGeneralException {
 
 	@Override
 	public String toString() {
-		return String.format("PspClientException: %s, %s", pspErrorCode, resultStatus);
+		return String.format("ClientException: %s, %s", pspErrorCode, resultStatus);
 	}
 }

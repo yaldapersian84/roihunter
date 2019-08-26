@@ -68,12 +68,6 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
 				(new GeneralResponse(ResultStatus.FORBIDDEN_REQUEST), HttpStatus.UNPROCESSABLE_ENTITY);
 	}
 
-	@ExceptionHandler(SizeLimitExceededException.class)
-	public final ResponseEntity<ResponseService> handleSizeLimitExceededException(SizeLimitExceededException ex) {
-		logger.error(ResultStatus.IMAGE_SIZE_LIMIT_EXCEEDED.getDescription(), ex);
-		return new ResponseEntity<>(new GeneralResponse(ResultStatus.IMAGE_SIZE_LIMIT_EXCEEDED), HttpStatus.UNPROCESSABLE_ENTITY);
-	}
-
 	@ExceptionHandler({UnknownHostException.class, ConnectException.class, SocketTimeoutException.class})
 	public final ResponseEntity<ResponseService> handleConnectionException(IOException ex) {
 		logger.error(ResultStatus.END_POINT_TIMEOUT.getDescription(), ex);

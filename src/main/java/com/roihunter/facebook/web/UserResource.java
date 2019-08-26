@@ -1,7 +1,7 @@
 package com.roihunter.facebook.web;
 
 
-import com.roihunter.facebook.exception.PspGeneralException;
+import com.roihunter.facebook.exception.GeneralException;
 import com.roihunter.facebook.model.dto.UserPhotoResponseDto;
 import com.roihunter.facebook.model.request.UserDataRequest;
 import com.roihunter.facebook.model.response.UserInfoResponse;
@@ -35,18 +35,18 @@ public class UserResource {
         return ResponseEntity.ok().build();
     }
     @GetMapping( path="/{user_fb_id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<UserInfoResponse> getUserData(@NotBlank @PathVariable String user_fb_id) throws PspGeneralException {
+    public ResponseEntity<UserInfoResponse> getUserData(@NotBlank @PathVariable String user_fb_id) throws GeneralException {
 
         return ResponseEntity.ok(userService.getUserInfo(user_fb_id));
     }
 
     @GetMapping( path="/{user_fb_id}/photos", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<List<UserPhotoResponseDto>> getUserPhotos(@NotBlank @PathVariable String user_fb_id) throws PspGeneralException {
+    public ResponseEntity<List<UserPhotoResponseDto>> getUserPhotos(@NotBlank @PathVariable String user_fb_id) throws GeneralException {
 
         return ResponseEntity.ok().body(userService.getUserPhoto(user_fb_id));
     }
     @DeleteMapping( path="/{user_fb_id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity deleteUser(@NotBlank @PathVariable String user_fb_id) throws PspGeneralException {
+    public ResponseEntity deleteUser(@NotBlank @PathVariable String user_fb_id) throws GeneralException {
 
         userService.deleteUser(user_fb_id);
 

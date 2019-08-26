@@ -2,26 +2,26 @@ package com.roihunter.facebook.exception;
 
 import com.roihunter.facebook.model.response.ResultStatus;
 
-public class PspGeneralException extends BusinessException {
+public class GeneralException extends BusinessException {
 
 	private static final long serialVersionUID = -2273769869370991999L;
 
-	protected ResultStatus resultStatus = ResultStatus.PSPPROXY_GENERIC_ERROR;
+	protected ResultStatus resultStatus = ResultStatus.FB_GENERIC_ERROR;
 	
-	public PspGeneralException(String message) {
+	public GeneralException(String message) {
 		super(message);
 	}
 
-	public PspGeneralException(Throwable cause) {
+	public GeneralException(Throwable cause) {
 		super(cause);
 	}
 
-	public PspGeneralException(String message, Throwable cause) {
+	public GeneralException(String message, Throwable cause) {
 		super(message, cause);
 	}
 
 
-	public PspGeneralException(ResultStatus resultStatus, String errorMessage) {
+	public GeneralException(ResultStatus resultStatus, String errorMessage) {
 		super(errorMessage, null);
 		this.resultStatus = resultStatus;
 	}

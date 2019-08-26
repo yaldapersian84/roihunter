@@ -3,7 +3,7 @@ package com.roihunter.facebook.service;
 import com.roihunter.facebook.client.FacebookClient;
 import com.roihunter.facebook.dao.UserInfoDao;
 import com.roihunter.facebook.dao.UserPhotoDao;
-import com.roihunter.facebook.exception.PspGeneralException;
+import com.roihunter.facebook.exception.GeneralException;
 import com.roihunter.facebook.model.UserInfo;
 import com.roihunter.facebook.model.dto.UserPhotoDto;
 import com.roihunter.facebook.model.dto.UserPhotoResponseDto;
@@ -66,24 +66,24 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void deleteUser(String fbId) throws PspGeneralException {
+	public void deleteUser(String fbId) throws GeneralException {
 		userInfoDao.delete(this.findByFbId(fbId));
 	}
 
 	@Override
-	public UserInfo findByFbId(String fbId) throws PspGeneralException {
+	public UserInfo findByFbId(String fbId) throws GeneralException {
 		return userInfoDao.findByFbId(fbId).orElseThrow(() ->
-				new PspGeneralException(ResultStatus.BAD_REQUEST, "efss"));
+				new GeneralException(ResultStatus.USER_NOT_FOUND, "user not found"));
 	}
 
 	@Override
-	public UserInfoResponse getUserInfo(String fbId) throws PspGeneralException {
+	public UserInfoResponse getUserInfo(String fbId) throws GeneralException {
 
 		return mapper.toUserInfoResponse(this.findByFbId(fbId));
 	}
 
 	@Override
-	public List<UserPhotoResponseDto> getUserPhoto(String fbId) throws PspGeneralException {
+	public List<UserPhotoResponseDto> getUserPhoto(String fbId) throws GeneralException {
 		return mapper.toListUserPhotos(this.findByFbId(fbId).getPhotos());
 	}
 

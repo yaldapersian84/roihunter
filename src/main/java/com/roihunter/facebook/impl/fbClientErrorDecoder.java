@@ -1,8 +1,8 @@
 package com.roihunter.facebook.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.roihunter.facebook.exception.ClientException;
 import com.roihunter.facebook.model.response.ResultStatus;
-import com.roihunter.facebook.exception.PspClientException;
 import com.roihunter.facebook.model.response.facebookErrorResponse;
 import feign.Response;
 import feign.Util;
@@ -21,9 +21,9 @@ public class fbClientErrorDecoder extends ErrorDecoder.Default {
 	public Exception decode(String methodKey, Response response) {
 		facebookErrorResponse responseService = read(response);
 		if (responseService == null) {
-			return new PspClientException(ResultStatus.FAILURE);
+			return new ClientException(ResultStatus.FAILURE);
 		}
-		return new PspClientException(responseService.getResult().getTitle(), responseService.getPspResponseCode(), responseService.getPspResponseDesc());
+		return new ClientException(responseService.getResult().getTitle(), responseService.getPspResponseCode(), responseService.getPspResponseDesc());
 	}
 
 	private facebookErrorResponse read(Response response) {
