@@ -16,7 +16,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collections;
 import java.util.List;
 
 @Slf4j
@@ -51,8 +50,6 @@ public class UserServiceImpl implements UserService {
 			userInfo.setId(userInfoDao.findByFbId(fbId).get().getId());
 			userPhotoDao.deleteByUserInfoFbId(fbId);
 		}
-
-//		userInfo.setPhotos(Collections.EMPTY_SET);
 
 		userInfo = userInfoDao.save(userInfo);
 

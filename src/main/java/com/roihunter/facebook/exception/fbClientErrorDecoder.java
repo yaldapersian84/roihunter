@@ -30,7 +30,7 @@ public class fbClientErrorDecoder extends ErrorDecoder.Default {
 		try {
 			return objectMapper.readValue(Util.toString(response.body().asReader()), facebookErrorResponse.class);
 		} catch (Exception e) {
-//			logger.error("couldn't parse general response: {}", response);
+			logger.error("couldn't parse general response: {}", response);
 			return null;
 		}
 	}
